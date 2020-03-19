@@ -3,13 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoutesEnum } from './enums/routes.enum';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: `/${RoutesEnum.OfferHelp}` },
   {
-    path: RoutesEnum.OfferHelp,
+    path: '',
+    loadChildren: () => import('./core/core.module').then(m => m.CoreModule),
+  },
+  {
+    path: RoutesEnum.Auth,
     loadChildren: () =>
-      import('./pages/offer-help-page/offer-help-page.module').then(
-        m => m.OfferHelpPageModule
+      import('./authentication/authentication.module').then(
+        m => m.AuthenticationModule
       ),
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];
 
