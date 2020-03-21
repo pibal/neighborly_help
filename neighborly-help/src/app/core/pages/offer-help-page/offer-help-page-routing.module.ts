@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SearchTaskComponent } from './containers/offer-help';
+import { SearchTaskComponent } from './containers/search-task';
 
 const routes: Routes = [{ path: '', component: SearchTaskComponent }];
 
