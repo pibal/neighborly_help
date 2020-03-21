@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
 import { ActivityType } from '../../../../../model/activity-type';
 import { TaskApi } from '../../../../../api/task-api';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'nh-add-task',
@@ -19,7 +19,11 @@ export class AddTaskComponent implements OnInit {
 
   taskForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private service: TaskApi) {}
+  constructor(
+    private fb: FormBuilder,
+    private service: TaskApi,
+    private notification: NzNotificationService
+  ) {}
 
   ngOnInit(): void {
     this.taskForm = this.fb.group({
@@ -51,14 +55,21 @@ export class AddTaskComponent implements OnInit {
     this.checkValidity(this.taskForm.get('address')['controls']);
 
     if (this.taskForm.valid) {
-      this.service.create({
-        ...this.taskForm.value,
-        // TODO: Replace with true values
-        localization: {
-          longitude: 20,
-          latitude: 50,
-        },
-      });
+      this.service
+        .create({
+          ...this.taskForm.value,
+          // TODO: Replace with true values
+          localization: {
+            longitude: 20,
+            latitude: 50,
+          },
+        })
+        .subscribe(x =>
+          this.notification.success(
+            'Dodano',
+            'Zgłoszenie zostało zarejestrowane'
+          )
+        );
     }
   }
 }
