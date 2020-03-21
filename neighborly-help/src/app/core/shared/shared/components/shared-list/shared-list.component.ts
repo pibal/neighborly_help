@@ -20,10 +20,12 @@ export class SharedListComponent {
   @Input() set rowData(data: PaginationList) {
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
-        //should provide data from server;
         params.successCallback(data.data, data.totalElements);
       },
     };
+    if (this.gridApi) {
+      this.gridApi.setDatasource(this.dataSource);
+    }
   }
 
   @Input() columnDefs: ColumnsDef[];
@@ -35,6 +37,7 @@ export class SharedListComponent {
 
   gridOptions: GridOptions = {
     pagination: true,
+    accentedSort: true,
     rowModelType: 'infinite',
     cacheBlockSize: 20, // you can have your custom page size
     paginationPageSize: 20, //pagesize
