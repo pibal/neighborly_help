@@ -14,14 +14,19 @@ export class SearchTaskComponent implements OnInit {
   constructor(private taskApi: TaskApi) {}
 
   ngOnInit() {
-    this.taskApi.getAll().subscribe(value => (this.allTasks = value));
+    this.taskApi
+      .getAll()
+      .subscribe(
+        value =>
+          (this.allTasks = value.filter(
+            value =>
+              value.state === TaskState.REQUESTED ||
+              value.state === TaskState.CANCELED
+          ))
+      );
   }
 
   getOfferHelp(): Task[] {
-    return this.allTasks.filter(
-      value =>
-        value.state === TaskState.REQUESTED ||
-        value.state === TaskState.CANCELED
-    );
+    return this.allTasks;
   }
 }

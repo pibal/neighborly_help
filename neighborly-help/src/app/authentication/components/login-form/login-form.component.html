@@ -1,0 +1,22 @@
+<form
+  fxLayout="column"
+  [formGroup]="formGroup"
+  (ngSubmit)="onLogin()"
+  fxLayoutGap="10px"
+>
+  <input formControlName="email" nz-input placeholder="Email" />
+  <input
+    formControlName="password"
+    type="password"
+    nz-input
+    placeholder="Haslo"
+  />
+  <button
+    [disabled]="formGroup.invalid"
+    type="submit"
+    nz-button
+    nzType="primary"
+  >
+    Zaloguj się
+  </button>
+</form>

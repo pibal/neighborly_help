@@ -59,12 +59,13 @@ export class AddTaskComponent implements OnInit {
         .create({
           ...this.taskForm.value,
         })
-        .subscribe(x =>
+        .subscribe(x => {
+          this.taskForm.reset();
           this.notification.success(
             'Dodano',
             'Zgłoszenie zostało zarejestrowane'
-          )
-        );
+          );
+        });
     }
   }
 

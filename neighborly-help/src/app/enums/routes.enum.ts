@@ -1,5 +1,9 @@
 export enum RoutesEnum {
+  App = 'app',
   Auth = 'auth',
+
+  Login = 'login',
+  Register = 'register',
 
   OfferHelp = 'offer-help',
   OfferHelp_SearchTask = 'search',
@@ -10,8 +14,8 @@ export enum RoutesEnum {
   NeedHelp_SubmittedTasks = 'submitted-tasks',
 }
 
-export const getOfferHelpSearchTaskUrl = `/${RoutesEnum.OfferHelp}/${RoutesEnum.OfferHelp_SearchTask}`;
-export const getOfferHelpAcceptedTasksUrl = `/${RoutesEnum.OfferHelp}/${RoutesEnum.OfferHelp_AcceptedTasks}`;
+export const getOfferHelpSearchTaskUrl = `/${RoutesEnum.App}/${RoutesEnum.OfferHelp}/${RoutesEnum.OfferHelp_SearchTask}`;
+export const getOfferHelpAcceptedTasksUrl = `/${RoutesEnum.App}/${RoutesEnum.OfferHelp}/${RoutesEnum.OfferHelp_AcceptedTasks}`;
 
-export const getNeedHelpAddTaskUrl = `/${RoutesEnum.NeedHelp}/${RoutesEnum.NeedHelp_AddTask}`;
-export const getNeedHelpSubmittedTasksUrl = `/${RoutesEnum.NeedHelp}/${RoutesEnum.NeedHelp_SubmittedTasks}`;
+export const getNeedHelpAddTaskUrl = `/${RoutesEnum.App}/${RoutesEnum.NeedHelp}/${RoutesEnum.NeedHelp_AddTask}`;
+export const getNeedHelpSubmittedTasksUrl = `/${RoutesEnum.App}/${RoutesEnum.NeedHelp}/${RoutesEnum.NeedHelp_SubmittedTasks}`;

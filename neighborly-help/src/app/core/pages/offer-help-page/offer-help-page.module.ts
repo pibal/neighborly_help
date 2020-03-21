@@ -13,6 +13,7 @@ import {
   NzModalModule,
   NzPageHeaderModule,
 } from 'ng-zorro-antd';
+import { LocalizationModule } from '../../localization/localization.module';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {
     NzDescriptionsModule,
     NzGridModule,
     NzModalModule,
+    LocalizationModule,
   ],
   declarations: [
     TaskListComponent,

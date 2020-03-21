@@ -11,7 +11,7 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: `/${RoutesEnum.OfferHelp}`,
+        redirectTo: `${RoutesEnum.OfferHelp}`,
       },
       {
         path: RoutesEnum.OfferHelp,
@@ -35,4 +35,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SkeletonRoutingModule {}
+export class CoreRoutingModule {}
