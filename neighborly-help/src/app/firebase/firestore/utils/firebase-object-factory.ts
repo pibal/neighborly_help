@@ -11,7 +11,7 @@ export function createFirebaseTaskFromCreationDTO(
   creationDTO: TaskCreationDTO,
   userID: string
 ): FirebaseTask {
-  return <FirebaseTask>{
+  return {
     creatorID: userID,
     type: mapActivityTypeToFirebase(creationDTO.type),
     date: firestore.Timestamp.fromDate(creationDTO.date),

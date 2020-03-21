@@ -12,7 +12,7 @@ import { firestore } from 'firebase';
 import { Address } from 'src/app/model/address';
 
 export function mapTaskFromFirebase(firebaseTask: FirebaseTask): Task {
-  return <Task>{
+  return {
     id: firebaseTask.id,
     creatorID: firebaseTask.creatorID,
     type: mapActivityTypeFromFirebase(firebaseTask.type),
@@ -32,7 +32,7 @@ export function mapTaskFromFirebase(firebaseTask: FirebaseTask): Task {
 export function mapAdressFromFirebase(
   firebaseAddress: FirebaseAddress
 ): Address {
-  return <Address>{
+  return {
     region: firebaseAddress.region,
     city: firebaseAddress.city,
     street: firebaseAddress.street,
@@ -42,7 +42,7 @@ export function mapAdressFromFirebase(
 }
 
 export function mapAdressToFirebase(address: Address): FirebaseAddress {
-  return <FirebaseAddress>{
+  return {
     region: address.region,
     city: address.city,
     street: address.street,
@@ -53,7 +53,7 @@ export function mapAdressToFirebase(address: Address): FirebaseAddress {
 
 export function mapRateFromFirebase(firebaseRate: FirebaseRate): Rate {
   return firebaseRate
-    ? <Rate>{
+    ? {
         rate: firebaseRate.rate,
         comment: firebaseRate.comment,
       }
@@ -85,7 +85,7 @@ export function mapTaskStateToFirebase(
 }
 
 export function mapGeoPointToCoords(localization: firestore.GeoPoint): Coords {
-  return <Coords>{
+  return {
     latitude: localization.latitude,
     longitude: localization.longitude,
   };
