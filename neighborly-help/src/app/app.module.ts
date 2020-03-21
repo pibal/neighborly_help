@@ -11,8 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import pl from '@angular/common/locales/pl';
 import { FirebaseModule } from './firebase/firebase.module';
-import { AuthenticationModule } from './authentication/authentication.module';
-import { CoreModule } from './core/core.module';
 import { FirestoreTaskService } from './firebase/firestore/services/firestore-task.service';
 import { TaskApi } from './api/task-api';
 import { FirestoreAppUserService } from './firebase/firestore/services/firestore-app-user.service';
@@ -31,8 +29,6 @@ registerLocaleData(pl);
     HttpClientModule,
     BrowserAnimationsModule,
     FirebaseModule,
-    AuthenticationModule,
-    CoreModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: pl_PL },
