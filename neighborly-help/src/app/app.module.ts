@@ -15,6 +15,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { CoreModule } from './core/core.module';
 import { FirestoreTaskService } from './firebase/firestore/services/firestore-task.service';
 import { TaskApi } from './api/task-api';
+import { FirestoreAppUserService } from './firebase/firestore/services/firestore-app-user.service';
+import { AppUserApi } from './api/app-user-api';
 
 registerLocaleData(pl);
 
@@ -35,6 +37,7 @@ registerLocaleData(pl);
   providers: [
     { provide: NZ_I18N, useValue: pl_PL },
     { provide: TaskApi, useClass: FirestoreTaskService },
+    { provide: AppUserApi, useClass: FirestoreAppUserService },
   ],
   bootstrap: [AppComponent],
 })

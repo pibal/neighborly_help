@@ -1,6 +1,6 @@
 import { firestore } from 'firebase';
 
-export interface AppUser {
+export interface FirebaseAppUser {
   uid: string;
   phoneNumber: string;
   defaultLocalization: firestore.GeoPoint;
