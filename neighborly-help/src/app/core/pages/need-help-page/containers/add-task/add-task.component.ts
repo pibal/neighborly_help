@@ -58,11 +58,6 @@ export class AddTaskComponent implements OnInit {
       this.service
         .create({
           ...this.taskForm.value,
-          // TODO: Replace with true values
-          localization: {
-            longitude: 20,
-            latitude: 50,
-          },
         })
         .subscribe(x =>
           this.notification.success(
@@ -71,5 +66,12 @@ export class AddTaskComponent implements OnInit {
           )
         );
     }
+  }
+
+  changeLocation($event: any) {
+    this.taskForm.get('localization').setValue({
+      latitude: $event.latitude,
+      longitude: $event.longitude,
+    });
   }
 }

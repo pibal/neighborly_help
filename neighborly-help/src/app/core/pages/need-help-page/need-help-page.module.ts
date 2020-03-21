@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FirebaseModule } from '../../../firebase/firebase.module';
 import { SharedModule } from '../../shared/shared/shared.module';
+import { LocalizationModule } from '../../localization/localization.module';
 
 @NgModule({
   declarations: [AddTaskComponent, SubmittedTasksComponent],
@@ -18,6 +19,7 @@ import { SharedModule } from '../../shared/shared/shared.module';
     NgZorroAntdModule,
     CommonModule,
     NeedHelpPageRoutingModule,
+    LocalizationModule,
   ],
 })
 export class NeedHelpPageModule {}
