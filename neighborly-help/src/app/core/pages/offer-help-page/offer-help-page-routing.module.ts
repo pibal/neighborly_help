@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OfferHelpComponent } from './containers/offer-help/offer-help.component';
+import { SearchTaskComponent } from './containers/offer-help';
 
-const routes: Routes = [{ path: '', component: OfferHelpComponent }];
+const routes: Routes = [{ path: '', component: SearchTaskComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
