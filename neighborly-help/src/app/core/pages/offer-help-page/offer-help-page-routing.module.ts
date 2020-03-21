@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoutesEnum } from '../../../enums';
-import { AcceptedTasksComponent } from './containers/accepted-tasks/accepted-tasks.component';
-import { SearchTaskComponent } from './containers/offer-help';
+import { SearchTaskComponent } from './containers/search-task';
+import { AcceptedTasksComponent } from './containers/accepted-tasks';
+import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   { path: '', redirectTo: RoutesEnum.OfferHelp_SearchTask },

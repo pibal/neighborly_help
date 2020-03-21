@@ -1,1 +1,155 @@
-<p>add-task works!</p>
+<nz-page-header
+  nzTitle="Dodaj Nowe Zadanie"
+  nzSubtitle="Opisz jakiej pomocy potrzebujesz"
+>
+</nz-page-header>
+
+<div class="inner-content">
+  <form nz-form [formGroup]="taskForm" (ngSubmit)="submitForm()">
+    <nh-map [editable]="true" (location)="changeLocation($event)"></nh-map>
+
+    <h4 class="spacer">Informacje</h4>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired
+        >Rodzaj zadania</nz-form-label
+      >
+      <nz-form-control
+        [nzSm]="14"
+        [nzXs]="24"
+        nzErrorTip="Musisz podać typ zadania"
+      >
+        <nz-select formControlName="type" nzAllowClear nzPlaceHolder="Choose">
+          <nz-option
+            nzValue="{{ activityType.PET }}"
+            nzLabel="Wyprowadzić zwierze"
+          ></nz-option>
+          <nz-option
+            nzValue="{{ activityType.RUBBISH }}"
+            nzLabel="Wyrzucić śmieci"
+          ></nz-option>
+          <nz-option
+            nzValue="{{ activityType.SHOPPING }}"
+            nzLabel="Zrobić zakupy"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="details"
+        >Szczegóły</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="details" id="details" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label
+        [nzSm]="6"
+        [nzXs]="24"
+        nzRequired
+        nzFor="creatorPhoneNumber"
+        >Numer Kontaktowy</nz-form-label
+      >
+      <nz-form-control
+        [nzSm]="14"
+        [nzXs]="24"
+        nzErrorTip="Musisz podać numer kontaktowy"
+      >
+        <input
+          nz-input
+          formControlName="creatorPhoneNumber"
+          id="creatorPhoneNumber"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired
+        >Data i czas</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Musisz date">
+        <nz-date-picker nzShowTime formControlName="date"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+
+    <h4>Adres</h4>
+
+    <span formGroupName="address">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="region"
+          >Województwo</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Musisz podać swóje województwo"
+        >
+          <input nz-input formControlName="region" id="region" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="city"
+          >Miasto</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Musisz podać swój miasto"
+        >
+          <input nz-input formControlName="city" id="city" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="street"
+          >Ulica</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Musisz podać swóją ulicę"
+        >
+          <input nz-input formControlName="street" id="street" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="local"
+          >Numer domu</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Musisz podać swój numer domu"
+        >
+          <input nz-input formControlName="local" id="local" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="postalCode"
+          >Kod pocztowy</nz-form-label
+        >
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="postalCode" id="postalCode" />
+        </nz-form-control>
+      </nz-form-item>
+    </span>
+
+    <nz-form-item nz-row class="register-area">
+      <nz-form-control [nzSm]="6">
+        <button nz-button nzType="primary">Dodaj</button>
+        <label
+          nz-checkbox
+          formControlName="epidemicDanger"
+          class="epidemicDanger"
+          >zagrożenie?</label
+        >
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

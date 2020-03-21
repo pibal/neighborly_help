@@ -8,6 +8,7 @@ import {
   SortChangedEvent,
 } from 'ag-grid-community';
 import { ColumnsDef, PaginationList } from '../..';
+import { Task } from '../../../../../model/task/task';
 
 @Component({
   selector: 'nh-shared-list',
@@ -20,10 +21,12 @@ export class SharedListComponent {
   @Input() set rowData(data: PaginationList) {
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
-        //should provide data from server;
         params.successCallback(data.data, data.totalElements);
       },
     };
+    if (this.gridApi) {
+      this.gridApi.setDatasource(this.dataSource);
+    }
   }
 
   @Input() columnDefs: ColumnsDef[];
@@ -32,9 +35,10 @@ export class SharedListComponent {
 
   @Output() sortingChanged: EventEmitter<any> = new EventEmitter();
   @Output() filterChanged: EventEmitter<any> = new EventEmitter();
-
+  @Output() selectedTask = new EventEmitter<Task>();
   gridOptions: GridOptions = {
     pagination: true,
+    accentedSort: true,
     rowModelType: 'infinite',
     cacheBlockSize: 20, // you can have your custom page size
     paginationPageSize: 20, //pagesize
@@ -42,7 +46,9 @@ export class SharedListComponent {
 
   constructor() {}
 
-  onCellClick($event: any) {}
+  onCellClick($event: any) {
+    this.selectedTask.emit($event.data.task);
+  }
 
   onGridSortChanged = (event: SortChangedEvent) => {
     this.sortingChanged.emit(event.api.getSortModel());

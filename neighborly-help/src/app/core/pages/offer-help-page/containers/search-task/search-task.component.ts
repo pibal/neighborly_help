@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from '../../../../../model/task/task';
 import { TaskApi } from '../../../../../api/task-api';
+import { Task } from 'src/app/model/task/task';
 import { TaskState } from '../../../../../model/task/task-state';
 
 @Component({
-  selector: 'nh-accepted-tasks',
-  templateUrl: './accepted-tasks.component.html',
-  styleUrls: ['./accepted-tasks.component.scss'],
+  selector: 'nh-offer-help',
+  templateUrl: './search-task.component.html',
+  styleUrls: ['./search-task.component.scss'],
 })
-export class AcceptedTasksComponent implements OnInit {
+export class SearchTaskComponent implements OnInit {
   private allTasks: Task[] = [];
 
   constructor(private taskApi: TaskApi) {}
@@ -18,6 +18,10 @@ export class AcceptedTasksComponent implements OnInit {
   }
 
   getOfferHelp(): Task[] {
-    return this.allTasks.filter(value => value.state === TaskState.ACCEPTED);
+    return this.allTasks.filter(
+      value =>
+        value.state === TaskState.REQUESTED ||
+        value.state === TaskState.CANCELED
+    );
   }
 }
