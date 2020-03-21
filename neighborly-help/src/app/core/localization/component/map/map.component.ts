@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'nh-map',
@@ -10,11 +10,17 @@ export class MapComponent implements OnInit {
   @Input() longitude = 0.0;
   @Input() editable = false;
 
+  @Output() location = new EventEmitter();
+
   onChoseLocation(event) {
     if (this.editable) {
       this.latitude = event.coords.lat;
       this.longitude = event.coords.lng;
     }
+    this.location.emit({
+      latitude: this.latitude,
+      longitude: this.longitude,
+    });
   }
 
   ngOnInit(): void {
