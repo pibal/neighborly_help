@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskApi } from '../../../../../api/task-api';
 import { Task } from 'src/app/model/task/task';
+import { TaskState } from '../../../../../model/task/task-state';
 
 @Component({
   selector: 'nh-offer-help',
@@ -17,6 +18,10 @@ export class SearchTaskComponent implements OnInit {
   }
 
   getOfferHelp(): Task[] {
-    return this.allTasks;
+    return this.allTasks.filter(
+      value =>
+        value.state === TaskState.REQUESTED ||
+        value.state === TaskState.CANCELED
+    );
   }
 }
