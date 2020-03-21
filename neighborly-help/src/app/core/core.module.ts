@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SkeletonRoutingModule } from './core-routing.module';
-import { SkeletonComponent } from './components/skeleton/skeleton.component';
+import { SkeletonComponent } from './components/skeleton';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzIconModule, NzMenuModule } from 'ng-zorro-antd';
 
