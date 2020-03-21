@@ -11,12 +11,6 @@ import {
 @NgModule({
   declarations: [SharedListComponent],
   exports: [SharedListComponent],
-  imports: [
-    CommonModule,
-    AgGridModule,
-    NzModalModule,
-    NzGridModule,
-    NzDescriptionsModule,
-  ],
+  imports: [CommonModule, AgGridModule],
 })
 export class SharedModule {}

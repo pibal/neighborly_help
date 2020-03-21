@@ -2,4 +2,61 @@
 <nh-shared-list
   [columnDefs]="columnDef"
   [rowData]="paginatedData"
+  (selectedTask)="showModal($event)"
 ></nh-shared-list>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzWidth]="800"
+  nzTitle="Szczegóły zadania"
+  nzOkText="Przyjmij zadanie"
+  [nzCancelText]="null"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <nz-descriptions nzTitle="Informacje ogólne" nzLayout="vertical">
+    <nz-descriptions-item nzTitle="Typ">
+      <p *ngIf="task?.type === activityType.SHOPPING">Zrobić zakupy</p>
+      <p *ngIf="task?.type === activityType.RUBBISH">Wyrzucić śmieci</p>
+      <p *ngIf="task?.type === activityType.PET">Wyprowadzić zwierze</p>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Data">{{
+      task?.date | date: 'dd.MM.yyyy h:mm:ss'
+    }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Status">
+      <p *ngIf="task?.state === taskState.REQUESTED">Oczekujący</p>
+      <p *ngIf="task?.state === taskState.ACCEPTED">Zaakceptowane</p>
+      <p *ngIf="task?.state === taskState.CANCELED">Anulowane</p>
+      <p *ngIf="task?.state === taskState.DONE">Wykonane</p>
+      <p *ngIf="task?.state === taskState.FAILED">Błędne</p>
+      <p *ngIf="task?.state === taskState.DELETED">Usunięte</p>
+      <p *ngIf="task?.state === taskState.RESIGNED">Porzucone</p>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Numer telefonu">{{
+      task?.creatorPhoneNumber
+    }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Niebezpieczeństwo epidemi">{{
+      task?.epidemicDanger ? 'Tak' : 'Nie'
+    }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Szczegóły">{{
+      task?.details
+    }}</nz-descriptions-item>
+  </nz-descriptions>
+  <nz-descriptions nzTitle="Adres" nzLayout="vertical">
+    <nz-descriptions-item nzTitle="Województwo">{{
+      task?.address?.region
+    }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Kod pocztoy">{{
+      task?.address?.postalCode
+    }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Miejscowość">{{
+      task?.address?.city
+    }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Ulica">{{
+      task?.address?.street
+    }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Numer lokalu">{{
+      task?.address?.local
+    }}</nz-descriptions-item>
+  </nz-descriptions>
+</nz-modal>

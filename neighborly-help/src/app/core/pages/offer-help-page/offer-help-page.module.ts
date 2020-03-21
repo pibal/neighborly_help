@@ -6,7 +6,13 @@ import { AcceptedTaskListComponent } from './components/active-task-list';
 import { SearchTaskComponent } from './containers/search-task';
 import { TaskListComponent } from './components/task-list';
 import { OfferHelpPageRoutingModule } from './offer-help-page-routing.module';
-import { NzLayoutModule, NzPageHeaderModule } from 'ng-zorro-antd';
+import {
+  NzDescriptionsModule,
+  NzGridModule,
+  NzLayoutModule,
+  NzModalModule,
+  NzPageHeaderModule,
+} from 'ng-zorro-antd';
 
 @NgModule({
   imports: [
@@ -15,6 +21,9 @@ import { NzLayoutModule, NzPageHeaderModule } from 'ng-zorro-antd';
     CommonModule,
     NzLayoutModule,
     NzPageHeaderModule,
+    NzDescriptionsModule,
+    NzGridModule,
+    NzModalModule,
   ],
   declarations: [
     TaskListComponent,
