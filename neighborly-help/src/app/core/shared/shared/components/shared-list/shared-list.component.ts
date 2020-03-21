@@ -8,6 +8,12 @@ import {
   SortChangedEvent,
 } from 'ag-grid-community';
 import { ColumnsDef, PaginationList } from '../..';
+import { TaskApi } from '../../../../../api/task-api';
+import { take } from 'rxjs/operators';
+import { Task } from '../../../../../model/task/task';
+import { ActivityType } from '../../../../../model/activity-type';
+import { TaskState } from '../../../../../model/task/task-state';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'nh-shared-list',
@@ -31,6 +37,10 @@ export class SharedListComponent {
   @Input() columnDefs: ColumnsDef[];
 
   private gridApi;
+  task: Task;
+  isVisible = false;
+  activityType = ActivityType;
+  taskState = TaskState;
 
   @Output() sortingChanged: EventEmitter<any> = new EventEmitter();
   @Output() filterChanged: EventEmitter<any> = new EventEmitter();
@@ -43,10 +53,29 @@ export class SharedListComponent {
     paginationPageSize: 20, //pagesize
   };
 
-  constructor() {}
+  constructor(
+    private service: TaskApi,
+    private notification: NzNotificationService
+  ) {}
 
   onCellClick($event: any) {
-    //console.log($event.data);
+    this.service
+      .get($event.id)
+      .pipe(take(1))
+      .subscribe(val => {
+        this.task = val;
+        this.isVisible = true;
+      });
+  }
+  handleOk(): void {
+    this.service.accept(this.task.id).subscribe(() => {
+      this.isVisible = false;
+      this.notification.success('Przyjęto', 'Zgłoszenie przyjęte');
+    });
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 
   onGridSortChanged = (event: SortChangedEvent) => {
