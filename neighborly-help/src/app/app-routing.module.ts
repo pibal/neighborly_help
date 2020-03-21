@@ -5,7 +5,7 @@ import { AuthenticationGuard } from './guard/authentication.guard';
 
 const routes: Routes = [
   {
-    path: 'app',
+    path: RoutesEnum.App,
     loadChildren: () => import('./core/core.module').then(m => m.CoreModule),
     canActivateChild: [AuthenticationGuard],
   },
@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'app',
+    redirectTo: RoutesEnum.App,
   },
 ];
 

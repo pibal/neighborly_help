@@ -3,6 +3,7 @@ import { AuthenticationService } from 'src/app/firebase/auth/authentication.serv
 import { Credentials } from 'src/app/firebase/auth';
 import { Router, ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { RoutesEnum } from 'src/app/enums';
 
 @Component({
   selector: 'nh-login',
@@ -26,6 +27,8 @@ export class LoginComponent implements OnInit {
   }
 
   goToRegister() {
-    this.router.navigate(['../register'], { relativeTo: this.route });
+    this.router.navigate([`../${RoutesEnum.Register}`], {
+      relativeTo: this.route,
+    });
   }
 }

@@ -3,12 +3,12 @@ import {
   CanActivateChild,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  UrlTree,
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../firebase/auth';
 import { tap } from 'rxjs/operators';
+import { RoutesEnum } from '../enums';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +20,7 @@ export class AuthenticationGuard implements CanActivateChild {
   ): Observable<boolean> {
     return this.authService.isLoggedIn.pipe(
       tap(x => {
-        console.log('isLogged::', x);
-        if (!x) this.router.navigate(['/', 'auth', 'login']);
+        if (!x) this.router.navigate(['/', RoutesEnum.Auth]);
       })
     );
   }

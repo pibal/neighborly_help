@@ -1,5 +1,9 @@
 export enum RoutesEnum {
+  App = 'app',
   Auth = 'auth',
+
+  Login = 'login',
+  Register = 'register',
 
   OfferHelp = 'offer-help',
   OfferHelp_SearchTask = 'search',

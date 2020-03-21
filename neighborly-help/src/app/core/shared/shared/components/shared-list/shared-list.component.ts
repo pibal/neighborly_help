@@ -42,17 +42,13 @@ export class SharedListComponent {
 
   constructor() {}
 
-  onCellClick($event: any) {
-    //console.log($event.data);
-  }
+  onCellClick($event: any) {}
 
   onGridSortChanged = (event: SortChangedEvent) => {
-    //console.log(event.api.getSortModel());
     this.sortingChanged.emit(event.api.getSortModel());
   };
 
   onGridFilterChange = (event: FilterChangedEvent) => {
-    //console.log(event.api.getFilterModel());
     this.filterChanged.emit(event.api.getFilterModel());
   };
 
