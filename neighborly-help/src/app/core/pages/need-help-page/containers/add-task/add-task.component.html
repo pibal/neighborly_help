@@ -1,11 +1,13 @@
 <nz-page-header
   nzTitle="Dodaj Nowe Zadanie"
-  nzSubtitle="Opisz w jaki rodzaj pomocy potrzebujesz"
+  nzSubtitle="Opisz jakiej pomocy potrzebujesz"
 >
 </nz-page-header>
 
 <div class="inner-content">
   <form nz-form [formGroup]="taskForm" (ngSubmit)="submitForm()">
+    <h4>Informacje</h4>
+
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired
         >Rodzaj zadania</nz-form-label
@@ -63,19 +65,6 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="address"
-        >Adres</nz-form-label
-      >
-      <nz-form-control
-        [nzSm]="14"
-        [nzXs]="24"
-        nzErrorTip="Musisz podać swój adres"
-      >
-        <input nz-input formControlName="address" id="address" />
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired
         >Data i czas</nz-form-label
       >
@@ -84,17 +73,80 @@
       </nz-form-control>
     </nz-form-item>
 
-    <nz-form-item>
-      <nz-form-control [nzSm]="20" [nzXs]="20" [nzOffset]="6">
-        <label nz-checkbox formControlName="epidemicDanger"
-          >Czy jesteś zarażony</label
+    <h4>Adres</h4>
+
+    <span formGroupName="address">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="region"
+          >Województwo</nz-form-label
         >
-      </nz-form-control>
-    </nz-form-item>
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Musisz podać swóje województwo"
+        >
+          <input nz-input formControlName="region" id="region" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="city"
+          >Miasto</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Musisz podać swój miasto"
+        >
+          <input nz-input formControlName="city" id="city" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="street"
+          >Ulica</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Musisz podać swóją ulicę"
+        >
+          <input nz-input formControlName="street" id="street" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="local"
+          >Numer domu</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Musisz podać swój numer domu"
+        >
+          <input nz-input formControlName="local" id="local" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="postalCode"
+          >Kod pocztowy</nz-form-label
+        >
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="postalCode" id="postalCode" />
+        </nz-form-control>
+      </nz-form-item>
+    </span>
 
     <nz-form-item nz-row class="register-area">
-      <nz-form-control [nzSpan]="3" [nzOffset]="20">
-        <button nz-button nzType="primary">Register</button>
+      <nz-form-control [nzSm]="6">
+        <button nz-button nzType="primary">Dodaj</button>
+        <label
+          nz-checkbox
+          formControlName="epidemicDanger"
+          class="epidemicDanger"
+          >zagrożenie?</label
+        >
       </nz-form-control>
     </nz-form-item>
   </form>

@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivityType } from '../../../../../model/activity-type';
 import { TaskApi } from '../../../../../api/task-api';
 
@@ -23,15 +29,27 @@ export class AddTaskComponent implements OnInit {
       creatorPhoneNumber: [null, [Validators.required]],
       epidemicDanger: [true],
       localization: [null],
-      address: [null, [Validators.required]],
+      address: this.fb.group({
+        region: [null, [Validators.required]],
+        city: [null, [Validators.required]],
+        street: [null, [Validators.required]],
+        postalCode: [null],
+        local: [null, [Validators.required]],
+      }),
     });
   }
 
-  submitForm(): void {
-    for (const i in this.taskForm.controls) {
-      this.taskForm.controls[i].markAsDirty();
-      this.taskForm.controls[i].updateValueAndValidity();
+  checkValidity(controls: { [key: string]: AbstractControl }) {
+    for (const i in controls) {
+      controls[i].markAsDirty();
+      controls[i].updateValueAndValidity();
     }
+  }
+
+  submitForm(): void {
+    this.checkValidity(this.taskForm.controls);
+    this.checkValidity(this.taskForm.get('address')['controls']);
+
     if (this.taskForm.valid) {
       this.service.create({
         ...this.taskForm.value,
