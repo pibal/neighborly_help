@@ -9,10 +9,16 @@ import { mapTaskFromFirebase } from '../utils/firebase-object-mappers';
 import { TaskCreationDTO } from 'src/app/model/task/task-creation-dto';
 import { TaskApi } from 'src/app/api/task-api';
 import { createFirebaseTaskFromCreationDTO } from '../utils/firebase-object-factory';
+import { AppUserApi } from 'src/app/api/app-user-api';
+import { TaskState } from 'src/app/model/task/task-state';
+import { ChangedPath } from 'ag-grid-community';
 
 @Injectable()
 export class FirestoreTaskService extends TaskApi {
-  constructor(private database: AngularFirestore) {
+  constructor(
+    private database: AngularFirestore,
+    private userAPiService: AppUserApi
+  ) {
     super();
   }
   // TODO: Add request options
@@ -45,8 +51,25 @@ export class FirestoreTaskService extends TaskApi {
   }
 
   public accept(id: string): Observable<any> {
-    throw new Error('Method not implemented.');
+    // TODO: get acceptor ID from auth context
+    const userID = '5sALe2N1MC33P7ldmDnv';
+    const taskCollection = this.database.collection<FirebaseTask>(
+      FirestoreCollectionsNames.TASK
+    );
+
+    return this.userAPiService.get(userID).pipe(
+      switchMap(appUser => {
+        return from(
+          taskCollection.doc(id).update({
+            state: TaskState.ACCEPTED,
+            executorPhoneNumber: appUser.phoneNumber,
+            executorID: userID,
+          })
+        );
+      })
+    );
   }
+
   public cancel(id: string): Observable<any> {
     throw new Error('Method not implemented.');
   }
