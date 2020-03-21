@@ -1,4 +1,4 @@
-export enum FirebaseHelpRequestState {
+export enum FirebaseTaskState {
   REQUESTED = 'REQUESTED',
   ACCEPTED = 'ACCEPTED',
   CANCELED = 'CANCELED',

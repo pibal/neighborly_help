@@ -1,5 +1,5 @@
 export enum FirebaseActivityType {
   SHOPPING = 'SHOPPING',
   RUBBISH = 'RUBBISH',
-  DOG = 'DOG',
+  PET = 'PET',
 }

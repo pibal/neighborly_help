@@ -1,4 +1,4 @@
-export enum HelpRequestState {
+export enum TaskState {
   REQUESTED = 'REQUESTED',
   ACCEPTED = 'ACCEPTED',
   CANCELED = 'CANCELED',
