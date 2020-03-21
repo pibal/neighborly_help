@@ -1,0 +1,9 @@
+export enum TaskState {
+  REQUESTED = 'REQUESTED',
+  ACCEPTED = 'ACCEPTED',
+  CANCELED = 'CANCELED',
+  DONE = 'DONE',
+  FAILED = 'FAILED',
+  DELETED = 'DELETED',
+  RESIGNED = 'RESIGNED',
+}

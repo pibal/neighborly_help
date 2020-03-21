@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import {
+  getNeedHelpAddTaskUrl,
+  getNeedHelpSubmittedTasksUrl,
+  getOfferHelpAcceptedTasksUrl,
+  getOfferHelpSearchTaskUrl,
+} from '../../../enums';
 
 @Component({
   selector: 'nh-skeleton',
@@ -6,5 +12,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./skeleton.component.scss'],
 })
 export class SkeletonComponent {
+  searchTasksUrl = getOfferHelpSearchTaskUrl;
+  acceptedTasksUrl = getOfferHelpAcceptedTasksUrl;
+  addTaskUrl = getNeedHelpAddTaskUrl;
+  submittedTasks = getNeedHelpSubmittedTasksUrl;
+
   isCollapsed = false;
 }

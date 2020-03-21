@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ExampleComponent } from '../example/example.component';
 import { NzModalService } from 'ng-zorro-antd';
-import { Template } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'nh-modal',
