@@ -20,6 +20,13 @@ const routes: Routes = [
             m => m.OfferHelpPageModule
           ),
       },
+      {
+        path: RoutesEnum.NeedHelp,
+        loadChildren: () =>
+          import('./pages/need-help-page/need-help-page.module').then(
+            m => m.NeedHelpPageModule
+          ),
+      },
     ],
   },
 ];
