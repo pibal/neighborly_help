@@ -29,6 +29,10 @@ export class MapComponent implements OnInit {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
       });
+      this.location.emit({
+        latitude: this.latitude,
+        longitude: this.longitude,
+      });
     }
   }
 }
