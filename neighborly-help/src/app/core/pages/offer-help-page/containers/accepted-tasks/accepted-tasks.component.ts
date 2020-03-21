@@ -14,10 +14,17 @@ export class AcceptedTasksComponent implements OnInit {
   constructor(private taskApi: TaskApi) {}
 
   ngOnInit() {
-    this.taskApi.getAll().subscribe(value => (this.allTasks = value));
+    this.taskApi
+      .getAll()
+      .subscribe(
+        value =>
+          (this.allTasks = value.filter(
+            value => value.state === TaskState.ACCEPTED
+          ))
+      );
   }
 
   getOfferHelp(): Task[] {
-    return this.allTasks.filter(value => value.state === TaskState.ACCEPTED);
+    return this.allTasks;
   }
 }

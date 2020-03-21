@@ -59,4 +59,8 @@
       task?.address?.local
     }}</nz-descriptions-item>
   </nz-descriptions>
+  <nh-map
+    [latitude]="task?.localization?.latitude"
+    [longitude]="task?.localization?.longitude"
+  ></nh-map>
 </nz-modal>
