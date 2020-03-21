@@ -5,14 +5,13 @@ import {
   translateBoolean,
   translateTypeToPolish,
 } from '../../../../shared/shared/utils';
-import { TaskState } from '../../../../../model/task/task-state';
 
 @Component({
-  selector: 'nh-active-task-list',
-  templateUrl: './active-task-list.component.html',
-  styleUrls: ['./active-task-list.component.scss'],
+  selector: 'nh-accepted-task-list',
+  templateUrl: './accepted-task-list.component.html',
+  styleUrls: ['./accepted-task-list.component.scss'],
 })
-export class ActiveTaskListComponent implements OnInit {
+export class AcceptedTaskListComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
@@ -20,15 +19,9 @@ export class ActiveTaskListComponent implements OnInit {
 
   @Input() set data(tasks: Task[]) {
     this.paginatedData = {
-      data: tasks
-        .filter(
-          value =>
-            value.state === TaskState.REQUESTED ||
-            value.state === TaskState.ACCEPTED
-        )
-        .map(value => {
-          return this.mapTaskToListRow(value);
-        }),
+      data: tasks.map(value => {
+        return this.mapTaskToListRow(value);
+      }),
       totalElements: tasks.length,
     };
   }
