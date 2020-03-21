@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import pl from '@angular/common/locales/pl';
 import { FirebaseModule } from './firebase/firebase.module';
+import { FirestoreTaskService } from './firebase/firestore/services/firestore-task.service';
+import { TaskApi } from './api/task-api';
 
 registerLocaleData(pl);
 
@@ -26,7 +28,10 @@ registerLocaleData(pl);
     BrowserAnimationsModule,
     FirebaseModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: pl_PL }],
+  providers: [
+    { provide: NZ_I18N, useValue: pl_PL },
+    { provide: TaskApi, useClass: FirestoreTaskService },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/firebase/auth';
+import {
+  getNeedHelpAddTaskUrl,
+  getNeedHelpSubmittedTasksUrl,
+  getOfferHelpAcceptedTasksUrl,
+  getOfferHelpSearchTaskUrl,
+} from '../../../enums';
 
 @Component({
   selector: 'nh-skeleton',
@@ -7,6 +13,11 @@ import { AuthenticationService } from 'src/app/firebase/auth';
   styleUrls: ['./skeleton.component.scss'],
 })
 export class SkeletonComponent {
+  searchTasksUrl = getOfferHelpSearchTaskUrl;
+  acceptedTasksUrl = getOfferHelpAcceptedTasksUrl;
+  addTaskUrl = getNeedHelpAddTaskUrl;
+  submittedTasks = getNeedHelpSubmittedTasksUrl;
+
   isCollapsed = false;
 
   constructor(private authService: AuthenticationService) {}
