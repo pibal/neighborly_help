@@ -63,6 +63,7 @@ export class AcceptedTaskListComponent implements OnInit {
       type: translateTypeToPolish(task.type),
       address: task.address.city + ' ' + task.address.street,
       epidemicDanger: translateBoolean(task.epidemicDanger),
+      task: task,
     };
   }
 }

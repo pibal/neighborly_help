@@ -5,6 +5,10 @@ import {
   translateBoolean,
   translateTypeToPolish,
 } from '../../../../shared/shared/utils';
+import { ActivityType } from '../../../../../model/activity-type';
+import { TaskState } from '../../../../../model/task/task-state';
+import { TaskApi } from '../../../../../api/task-api';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'nh-task-list',
@@ -12,10 +16,32 @@ import {
   styleUrls: ['./task-list.component.scss'],
 })
 export class TaskListComponent implements OnInit {
-  constructor() {}
+  task: Task;
+  isVisible = false;
+  activityType = ActivityType;
+  taskState = TaskState;
+  constructor(
+    private service: TaskApi,
+    private notification: NzNotificationService
+  ) {}
 
   ngOnInit() {}
   paginatedData: PaginationList;
+
+  showModal($event: Task) {
+    this.task = $event;
+    this.isVisible = true;
+  }
+  handleOk(): void {
+    this.service.accept(this.task.id).subscribe(() => {
+      this.isVisible = false;
+      this.notification.success('Przyjęto', 'Zgłoszenie przyjęte');
+    });
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
 
   @Input() set data(tasks: Task[]) {
     this.paginatedData = {
@@ -63,6 +89,7 @@ export class TaskListComponent implements OnInit {
       type: translateTypeToPolish(task.type),
       address: task.address.city + ' ' + task.address.street,
       epidemicDanger: translateBoolean(task.epidemicDanger),
+      task: task,
     };
   }
 }
