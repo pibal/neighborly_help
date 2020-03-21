@@ -17,10 +17,10 @@ export class AuthenticationService {
   }
 
   login(credentials: Credentials): Observable<NhUser> {
-    const { username, password } = credentials;
+    const { email, password } = credentials;
 
     return from(
-      this.fbServiceInstance.signInWithEmailAndPassword(username, password)
+      this.fbServiceInstance.signInWithEmailAndPassword(email, password)
     ).pipe(
       map((firebaseUser: firebase.auth.UserCredential) =>
         this.mapToNhUser(firebaseUser)
@@ -31,7 +31,7 @@ export class AuthenticationService {
   register(credentials: Credentials): Observable<NhUser> {
     return from(
       this.fbServiceInstance.createUserWithEmailAndPassword(
-        credentials.username,
+        credentials.email,
         credentials.password
       )
     ).pipe(

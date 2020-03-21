@@ -17,17 +17,21 @@ export class RegisterFormComponent {
   constructor(private fb: FormBuilder) {
     this.formGroup = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
       'retype-password': [
         null,
-        [Validators.required, samePasswordValidator('password')],
+        [
+          Validators.required,
+          samePasswordValidator('password'),
+          Validators.minLength(6),
+        ],
       ],
     });
   }
 
   onRegister() {
     this.register.emit({
-      username: this.formGroup.get('email').value,
+      email: this.formGroup.get('email').value,
       password: this.formGroup.get('password').value,
     });
   }

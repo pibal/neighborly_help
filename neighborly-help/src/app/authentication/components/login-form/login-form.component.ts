@@ -15,13 +15,13 @@ export class LoginFormComponent {
   constructor(private fb: FormBuilder) {
     this.formGroup = this.fb.group({
       email: [null, [Validators.email, Validators.required]],
-      password: [null, [Validators.required]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
     });
   }
 
   onLogin() {
     this.login.emit({
-      username: this.formGroup.get('email').value,
+      email: this.formGroup.get('email').value,
       password: this.formGroup.get('password').value,
     });
   }
