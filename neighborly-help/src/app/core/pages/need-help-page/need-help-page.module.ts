@@ -8,9 +8,14 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FirebaseModule } from '../../../firebase/firebase.module';
 import { SharedModule } from '../../shared/shared/shared.module';
 import { LocalizationModule } from '../../localization/localization.module';
+import { CreatedTaskListComponent } from './components/created-task-list/created-task-list.component';
 
 @NgModule({
-  declarations: [AddTaskComponent, SubmittedTasksComponent],
+  declarations: [
+    AddTaskComponent,
+    SubmittedTasksComponent,
+    CreatedTaskListComponent,
+  ],
   imports: [
     SharedModule,
     FirebaseModule,

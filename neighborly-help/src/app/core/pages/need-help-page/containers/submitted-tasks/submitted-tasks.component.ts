@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskApi } from '../../../../../api/task-api';
+import { Task } from '../../../../../model/task/task';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'nh-submitted-tasks',
@@ -6,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./submitted-tasks.component.scss'],
 })
 export class SubmittedTasksComponent implements OnInit {
-  constructor() {}
+  myTasks: Observable<Task[]>;
 
-  ngOnInit() {}
+  constructor(private taskApi: TaskApi) {}
+
+  ngOnInit() {
+    this.myTasks = this.taskApi.getAll();
+  }
 }
