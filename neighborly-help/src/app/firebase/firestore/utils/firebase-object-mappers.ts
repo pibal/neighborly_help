@@ -10,6 +10,9 @@ import { TaskState } from 'src/app/model/task/task-state';
 import { Coords } from 'src/app/model/coords';
 import { firestore } from 'firebase';
 import { Address } from 'src/app/model/address';
+import { FirebaseAppUser } from '../firebase-model/firebase-app-user';
+import { AppUser } from 'src/app/model/app-user';
+import { AppUserApi } from 'src/app/api/app-user-api';
 
 export function mapTaskFromFirebase(firebaseTask: FirebaseTask): Task {
   return {
@@ -88,5 +91,31 @@ export function mapGeoPointToCoords(localization: firestore.GeoPoint): Coords {
   return {
     latitude: localization.latitude,
     longitude: localization.longitude,
+  };
+}
+
+export function mapCoordsToGeoPoint(localization: Coords) {
+  return new firestore.GeoPoint(localization.latitude, localization.longitude);
+}
+
+export function mapAppUserToFirebase(appUser: AppUser): FirebaseAppUser {
+  return {
+    uid: appUser.uid,
+    phoneNumber: appUser.phoneNumber,
+    defaultLocalization: mapCoordsToGeoPoint(appUser.defaultLocalization),
+    displayName: appUser.displayName,
+  };
+}
+
+export function mapAppUserFromFirebase(
+  firebaseAppUser: FirebaseAppUser
+): AppUser {
+  return {
+    uid: firebaseAppUser.uid,
+    phoneNumber: firebaseAppUser.phoneNumber,
+    defaultLocalization: mapGeoPointToCoords(
+      firebaseAppUser.defaultLocalization
+    ),
+    displayName: firebaseAppUser.displayName,
   };
 }

@@ -8,13 +8,13 @@ import { first, map, switchAll, switchMap } from 'rxjs/operators';
 import { mapTaskFromFirebase } from '../utils/firebase-object-mappers';
 import { TaskCreationDTO } from 'src/app/model/task/task-creation-dto';
 import { TaskApi } from 'src/app/api/task-api';
+import { createFirebaseTaskFromCreationDTO } from '../utils/firebase-object-factory';
 
 @Injectable()
 export class FirestoreTaskService extends TaskApi {
   constructor(private database: AngularFirestore) {
     super();
   }
-
   // TODO: Add request options
   public getAll(): Observable<Task[]> {
     const firestoreResponse: Observable<FirebaseTask[]> = this.database
@@ -35,7 +35,13 @@ export class FirestoreTaskService extends TaskApi {
   }
 
   public create(creationDTO: TaskCreationDTO): Observable<string> {
-    throw new Error('Method not implemented.');
+    //TODO: get uder ID from auth context
+    const userID = '5sALe2N1MC33P7ldmDnv';
+    const firebaseTask = createFirebaseTaskFromCreationDTO(creationDTO, userID);
+    const taskCollection = this.database.collection<FirebaseTask>(
+      FirestoreCollectionsNames.TASK
+    );
+    return from(taskCollection.add(firebaseTask)).pipe(map(res => res.id));
   }
 
   public accept(id: string): Observable<any> {

@@ -1,1 +1,1 @@
-export * from './offer-list';
+export * from './task-list';
