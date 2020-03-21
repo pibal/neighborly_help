@@ -61,8 +61,14 @@ export class TaskListComponent implements OnInit {
     return {
       id: task.id,
       type: translateTypeToPolish(task.type),
-      address: task.address.city + ' ' + task.address.street,
+      address:
+        task.address.city +
+        ' ' +
+        task.address.street +
+        ' ' +
+        task.address.local,
       epidemicDanger: translateBoolean(task.epidemicDanger),
+      task: task,
     };
   }
 }
