@@ -6,7 +6,9 @@
 
 <div class="inner-content">
   <form nz-form [formGroup]="taskForm" (ngSubmit)="submitForm()">
-    <h4>Informacje</h4>
+    <nh-map [editable]="true" (location)="changeLocation($event)"></nh-map>
+
+    <h4 class="spacer">Informacje</h4>
 
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired
@@ -137,8 +139,6 @@
         </nz-form-control>
       </nz-form-item>
     </span>
-
-    <nh-map [editable]="true" (location)="changeLocation($event)"></nh-map>
 
     <nz-form-item nz-row class="register-area">
       <nz-form-control [nzSm]="6">

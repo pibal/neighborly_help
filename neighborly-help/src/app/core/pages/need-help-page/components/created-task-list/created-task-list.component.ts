@@ -16,6 +16,7 @@ export class CreatedTaskListComponent implements OnInit {
   paginatedData: PaginationList;
 
   @Input() set data(tasks: Task[]) {
+    tasks = tasks || [];
     this.paginatedData = {
       data: tasks.map(value => {
         return this.mapTaskToListRow(value);
