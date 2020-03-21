@@ -6,6 +6,11 @@ import { RoutesEnum } from '../enums';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: RoutesEnum.Login,
+  },
+  {
     path: RoutesEnum.Login,
     component: LoginComponent,
   },
