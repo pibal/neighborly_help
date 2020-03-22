@@ -5,18 +5,23 @@ import { Task } from 'src/app/model/task/task';
 import { FirestoreCollectionsNames } from '../enum/firestore-collections-names';
 import { FirebaseTask } from '../firebase-model/firebase-task';
 import { map, switchMap } from 'rxjs/operators';
-import { mapTaskFromFirebase } from '../utils/firebase-object-mappers';
+import {
+  mapTaskFromFirebase,
+  mapTaskStateToFirebase,
+} from '../utils/firebase-object-mappers';
 import { TaskCreationDTO } from 'src/app/model/task/task-creation-dto';
 import { TaskApi } from 'src/app/api/task-api';
 import { createFirebaseTaskFromCreationDTO } from '../utils/firebase-object-factory';
 import { AppUserApi } from 'src/app/api/app-user-api';
 import { TaskState } from 'src/app/model/task/task-state';
-import { ChangedPath } from 'ag-grid-community';
+
+const STATE_FIELD_NAME = 'state';
+const CREATOR_ID_FIELD_NAME = 'creatorID';
 
 @Injectable()
 export class FirestoreTaskService extends TaskApi {
   // TODO: get acceptor ID from auth context
-  private creatorID: string = '5sALe2N1MC33P7ldmDnv';
+  private creatorID: string = '2OJz93nFdYYM4cQTOcQokcgZwG63';
   private executorID: string = 'jslXfh1FYBbKr7PxOGvoj5zmkqt2';
 
   constructor(
@@ -40,12 +45,29 @@ export class FirestoreTaskService extends TaskApi {
     );
   }
 
+  public getByCreatorAndStates(states: TaskState[]) {
+    const firebaseStates = states.map(state => mapTaskStateToFirebase(state));
+    const firestoreResponse = this.database
+      .collection<FirebaseTask>(FirestoreCollectionsNames.TASK, ref =>
+        ref
+          .where(STATE_FIELD_NAME, 'in', firebaseStates)
+          .where(CREATOR_ID_FIELD_NAME, '==', this.creatorID)
+      )
+      .valueChanges({ idField: 'id' });
+    return <Observable<Task[]>>(
+      firestoreResponse.pipe(
+        map(firebaseHelpList =>
+          firebaseHelpList.map(element => mapTaskFromFirebase(element))
+        )
+      )
+    );
+  }
+
   public get(id: string): Observable<Task> {
     throw new Error('Method not implemented.');
   }
 
   public create(creationDTO: TaskCreationDTO): Observable<string> {
-    //TODO: get uder ID from auth context
     const firebaseTask = createFirebaseTaskFromCreationDTO(
       creationDTO,
       this.creatorID
