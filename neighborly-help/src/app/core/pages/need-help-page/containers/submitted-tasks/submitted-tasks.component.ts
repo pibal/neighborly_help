@@ -15,6 +15,12 @@ export class SubmittedTasksComponent implements OnInit {
   constructor(private taskApi: TaskApi) {}
 
   ngOnInit() {
-    this.myTasks = this.taskApi.getByCreatorAndStates([TaskState.ACCEPTED]);
+    this.myTasks = this.taskApi.getByCreatorAndStates([
+      TaskState.REQUESTED,
+      TaskState.ACCEPTED,
+      TaskState.DONE,
+      TaskState.FAILED,
+      TaskState.RESIGNED,
+    ]);
   }
 }

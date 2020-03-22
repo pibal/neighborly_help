@@ -3,6 +3,7 @@ import { Task } from '../../../../../model/task/task';
 import { PaginationList } from '../../../../shared/shared';
 import {
   translateBoolean,
+  translateStateToPolish,
   translateTypeToPolish,
 } from '../../../../shared/shared/utils';
 import { ActivityType } from '../../../../../model/activity-type';
@@ -68,6 +69,13 @@ export class TaskListComponent implements OnInit {
       width: 350,
     },
     {
+      headerName: 'Status',
+      field: 'state',
+      sortable: true,
+      filter: true,
+      width: 350,
+    },
+    {
       headerName: 'Adres',
       field: 'address',
       sortable: true,
@@ -87,6 +95,7 @@ export class TaskListComponent implements OnInit {
     return {
       id: task.id,
       type: translateTypeToPolish(task.type),
+      state: translateStateToPolish(task.state),
       address: task.address.city + ' ' + task.address.street,
       epidemicDanger: translateBoolean(task.epidemicDanger),
       task: task,

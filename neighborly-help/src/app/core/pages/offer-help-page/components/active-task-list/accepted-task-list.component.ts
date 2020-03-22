@@ -3,6 +3,7 @@ import { Task } from '../../../../../model/task/task';
 import { PaginationList } from '../../../../shared/shared';
 import {
   translateBoolean,
+  translateStateToPolish,
   translateTypeToPolish,
 } from '../../../../shared/shared/utils';
 import { ActivityType } from '../../../../../model/activity-type';

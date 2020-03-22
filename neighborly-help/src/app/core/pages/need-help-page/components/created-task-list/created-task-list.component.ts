@@ -3,6 +3,7 @@ import { PaginationList } from '../../../../shared/shared';
 import { Task } from '../../../../../model/task/task';
 import {
   translateBoolean,
+  translateStateToPolish,
   translateTypeToPolish,
 } from '../../../../shared/shared/utils';
 import { ActivityType } from '../../../../../model/activity-type';
@@ -29,7 +30,8 @@ export class CreatedTaskListComponent implements OnInit {
   ngOnInit() {}
   paginatedData: PaginationList;
 
-  @Input() set data(tasks: Task[]) {
+  @Input()
+  set data(tasks: Task[]) {
     tasks = tasks || [];
     this.paginatedData = {
       data: tasks.map(value => {
@@ -50,6 +52,13 @@ export class CreatedTaskListComponent implements OnInit {
     {
       headerName: 'Rodzaj zadania',
       field: 'type',
+      sortable: true,
+      filter: true,
+      width: 350,
+    },
+    {
+      headerName: 'Status',
+      field: 'state',
       sortable: true,
       filter: true,
       width: 350,
@@ -129,6 +138,7 @@ export class CreatedTaskListComponent implements OnInit {
     return {
       id: task.id,
       type: translateTypeToPolish(task.type),
+      state: translateStateToPolish(task.state),
       address: task.address.city + ' ' + task.address.street,
       epidemicDanger: translateBoolean(task.epidemicDanger),
       task: task,

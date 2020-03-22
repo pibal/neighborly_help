@@ -13,7 +13,12 @@
   (nzOnOk)="handleOk()"
   [nzFooter]="modalFooter"
 >
-  <nz-descriptions nzTitle="Informacje ogólne" nzLayout="vertical">
+  <nh-map
+    [latitude]="task?.localization?.latitude"
+    [longitude]="task?.localization?.longitude"
+  ></nh-map>
+
+  <nz-descriptions nzTitle="Informacje ogólne" nzLayout="vertical" nzBordered>
     <nz-descriptions-item nzTitle="Typ">
       <p *ngIf="task?.type === activityType.SHOPPING">Zrobić zakupy</p>
       <p *ngIf="task?.type === activityType.RUBBISH">Wyrzucić śmieci</p>
@@ -41,7 +46,8 @@
       task?.details
     }}</nz-descriptions-item>
   </nz-descriptions>
-  <nz-descriptions nzTitle="Adres" nzLayout="vertical">
+
+  <nz-descriptions nzTitle="Adres" nzLayout="vertical" nzBordered>
     <nz-descriptions-item nzTitle="Województwo">{{
       task?.address?.region
     }}</nz-descriptions-item>
