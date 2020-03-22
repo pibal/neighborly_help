@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class AuthenticationService {
   _isLoggedIn = false;
+  loggedUserId: string;
   constructor(private fbAuthService: AngularFireAuth, private router: Router) {}
   get isLoggedIn(): Observable<boolean> {
     if (!this._isLoggedIn) {
@@ -57,7 +58,12 @@ export class AuthenticationService {
   }
 
   getUID(): Observable<string> {
-    return this.fbAuthService.user.pipe(map(user => user.uid));
+    return this.fbAuthService.user.pipe(
+      map(user => {
+        this.loggedUserId = user.uid;
+        return user.uid;
+      })
+    );
   }
 
   private get fbServiceInstance() {
