@@ -5,6 +5,10 @@ import {
   translateBoolean,
   translateTypeToPolish,
 } from '../../../../shared/shared/utils';
+import { ActivityType } from '../../../../../model/activity-type';
+import { TaskState } from '../../../../../model/task/task-state';
+import { TaskApi } from '../../../../../api/task-api';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'nh-accepted-task-list',
@@ -12,7 +16,14 @@ import {
   styleUrls: ['./accepted-task-list.component.scss'],
 })
 export class AcceptedTaskListComponent implements OnInit {
-  constructor() {}
+  task: Task;
+  isVisible = false;
+  activityType = ActivityType;
+  taskState = TaskState;
+  constructor(
+    private service: TaskApi,
+    private notification: NzNotificationService
+  ) {}
 
   ngOnInit() {}
   paginatedData: PaginationList;
@@ -24,6 +35,21 @@ export class AcceptedTaskListComponent implements OnInit {
       }),
       totalElements: tasks.length,
     };
+  }
+
+  showModal($event: Task) {
+    this.task = $event;
+    this.isVisible = true;
+  }
+  handleOk(): void {
+    this.service.resign(this.task.id).subscribe(() => {
+      this.isVisible = false;
+      this.notification.success('Porzucono', 'Zgłoszenie porzucone');
+    });
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 
   columnDef = [
