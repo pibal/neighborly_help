@@ -1,0 +1,9 @@
+<div class="register-container" fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutGap="10px" class="register">
+    <h2 class="title">Rejestracja w aplikacji Pomocna dłoń</h2>
+    <nh-register-form
+      (register)="onRegister($event)"
+      (cancel)="onCancel()"
+    ></nh-register-form>
+  </div>
+</div>

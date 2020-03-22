@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoutesEnum } from './enums/routes.enum';
+import { AuthenticationGuard } from './guard/authentication.guard';
 
 const routes: Routes = [
   {
-    path: '',
+    path: RoutesEnum.App,
     loadChildren: () => import('./core/core.module').then(m => m.CoreModule),
+    canActivateChild: [AuthenticationGuard],
   },
   {
     path: RoutesEnum.Auth,
@@ -16,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: RoutesEnum.App,
   },
 ];
 

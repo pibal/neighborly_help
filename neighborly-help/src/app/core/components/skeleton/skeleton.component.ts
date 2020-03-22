@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from 'src/app/firebase/auth';
 import {
   getNeedHelpAddTaskUrl,
   getNeedHelpSubmittedTasksUrl,
@@ -18,4 +19,10 @@ export class SkeletonComponent {
   submittedTasks = getNeedHelpSubmittedTasksUrl;
 
   isCollapsed = false;
+
+  constructor(private authService: AuthenticationService) {}
+
+  onLogout() {
+    this.authService.logout().subscribe();
+  }
 }

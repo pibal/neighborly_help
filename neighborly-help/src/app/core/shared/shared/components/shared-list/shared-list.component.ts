@@ -51,12 +51,10 @@ export class SharedListComponent {
   }
 
   onGridSortChanged = (event: SortChangedEvent) => {
-    //console.log(event.api.getSortModel());
     this.sortingChanged.emit(event.api.getSortModel());
   };
 
   onGridFilterChange = (event: FilterChangedEvent) => {
-    //console.log(event.api.getFilterModel());
     this.filterChanged.emit(event.api.getFilterModel());
   };
 
