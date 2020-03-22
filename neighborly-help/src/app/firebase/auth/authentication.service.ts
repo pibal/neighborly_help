@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Credentials } from '.';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { NhUser } from './dto/nh-user';
 import { Router } from '@angular/router';
@@ -10,10 +10,17 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthenticationService {
+  _isLoggedIn = false;
   constructor(private fbAuthService: AngularFireAuth, private router: Router) {}
-
   get isLoggedIn(): Observable<boolean> {
-    return this.fbAuthService.authState.pipe(map(loggedUser => !!loggedUser));
+    if (!this._isLoggedIn) {
+      return this.fbAuthService.authState.pipe(
+        map(loggedUser => !!loggedUser),
+        tap(_ => (this._isLoggedIn = true))
+      );
+    } else {
+      return of(true);
+    }
   }
 
   login(credentials: Credentials): Observable<NhUser> {
