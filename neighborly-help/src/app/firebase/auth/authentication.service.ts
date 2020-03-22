@@ -56,6 +56,10 @@ export class AuthenticationService {
     );
   }
 
+  getUID(): Observable<string> {
+    return this.fbAuthService.user.pipe(map(user => user.uid));
+  }
+
   private get fbServiceInstance() {
     return this.fbAuthService.auth;
   }
