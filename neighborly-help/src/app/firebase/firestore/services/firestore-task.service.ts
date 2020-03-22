@@ -14,6 +14,7 @@ import { TaskApi } from 'src/app/api/task-api';
 import { createFirebaseTaskFromCreationDTO } from '../utils/firebase-object-factory';
 import { AppUserApi } from 'src/app/api/app-user-api';
 import { TaskState } from 'src/app/model/task/task-state';
+import { AuthenticationService } from 'src/app/firebase/auth/authentication.service';
 
 const STATE_FIELD_NAME = 'state';
 const CREATOR_ID_FIELD_NAME = 'creatorID';
@@ -21,12 +22,11 @@ const CREATOR_ID_FIELD_NAME = 'creatorID';
 @Injectable()
 export class FirestoreTaskService extends TaskApi {
   // TODO: get acceptor ID from auth context
-  private creatorID: string = '2OJz93nFdYYM4cQTOcQokcgZwG63';
-  private executorID: string = 'jslXfh1FYBbKr7PxOGvoj5zmkqt2';
 
   constructor(
     private database: AngularFirestore,
-    private userAPiService: AppUserApi
+    private userAPiService: AppUserApi,
+    private authService: AuthenticationService
   ) {
     super();
   }
@@ -45,20 +45,26 @@ export class FirestoreTaskService extends TaskApi {
     );
   }
 
-  public getByCreatorAndStates(states: TaskState[]) {
+  public getByCreatorAndStates(states: TaskState[]): Observable<Task[]> {
     const firebaseStates = states.map(state => mapTaskStateToFirebase(state));
-    const firestoreResponse = this.database
-      .collection<FirebaseTask>(FirestoreCollectionsNames.TASK, ref =>
-        ref
-          .where(STATE_FIELD_NAME, 'in', firebaseStates)
-          .where(CREATOR_ID_FIELD_NAME, '==', this.creatorID)
-      )
-      .valueChanges({ idField: 'id' });
-    return <Observable<Task[]>>(
-      firestoreResponse.pipe(
-        map(firebaseHelpList =>
-          firebaseHelpList.map(element => mapTaskFromFirebase(element))
+    return this.authService.getUID().pipe(
+      map(uid =>
+        this.database.collection<FirebaseTask>(
+          FirestoreCollectionsNames.TASK,
+          ref =>
+            ref
+              .where(STATE_FIELD_NAME, 'in', firebaseStates)
+              .where(CREATOR_ID_FIELD_NAME, '==', uid)
         )
+      ),
+      switchMap(collection =>
+        collection
+          .valueChanges({ idField: 'id' })
+          .pipe(
+            map(firebaseHelpList =>
+              firebaseHelpList.map(element => mapTaskFromFirebase(element))
+            )
+          )
       )
     );
   }
@@ -68,14 +74,13 @@ export class FirestoreTaskService extends TaskApi {
   }
 
   public create(creationDTO: TaskCreationDTO): Observable<string> {
-    const firebaseTask = createFirebaseTaskFromCreationDTO(
-      creationDTO,
-      this.creatorID
-    );
     const taskCollection = this.database.collection<FirebaseTask>(
       FirestoreCollectionsNames.TASK
     );
-    return from(taskCollection.add(firebaseTask)).pipe(map(res => res.id));
+    return this.authService.getUID().pipe(
+      map(uid => createFirebaseTaskFromCreationDTO(creationDTO, uid)),
+      switchMap(task => from(taskCollection.add(task)).pipe(map(res => res.id)))
+    );
   }
 
   public accept(id: string): Observable<any> {
@@ -83,7 +88,8 @@ export class FirestoreTaskService extends TaskApi {
       FirestoreCollectionsNames.TASK
     );
 
-    return this.userAPiService.get(this.executorID).pipe(
+    return this.authService.getUID().pipe(
+      switchMap(uid => this.userAPiService.get(uid)),
       switchMap(appUser => {
         return from(
           taskCollection.doc(id).update({
@@ -100,56 +106,82 @@ export class FirestoreTaskService extends TaskApi {
     const taskCollection = this.database.collection<FirebaseTask>(
       FirestoreCollectionsNames.TASK
     );
-    return from(
-      taskCollection.doc(id).update({
-        state: TaskState.CANCELED,
-      })
+    return this.authService.getUID().pipe(
+      switchMap(uid =>
+        from(
+          taskCollection.doc(id).update({
+            state: TaskState.CANCELED,
+          })
+        )
+      )
     );
   }
   public delete(id: string): Observable<any> {
     const taskCollection = this.database.collection<FirebaseTask>(
       FirestoreCollectionsNames.TASK
     );
-    return from(
-      taskCollection.doc(id).update({
-        state: TaskState.DELETED,
-      })
+    return this.authService.getUID().pipe(
+      switchMap(uid =>
+        from(
+          taskCollection.doc(id).update({
+            state: TaskState.DELETED,
+          })
+        )
+      )
     );
   }
   public resign(id: string): Observable<any> {
     const taskCollection = this.database.collection<FirebaseTask>(
       FirestoreCollectionsNames.TASK
     );
-    return from(
-      taskCollection.doc(id).update({
-        state: TaskState.RESIGNED,
-        executorID: '',
-        executorPhoneNumber: '',
-      })
+    return this.authService.getUID().pipe(
+      switchMap(uid =>
+        from(
+          taskCollection.doc(id).update({
+            state: TaskState.RESIGNED,
+            executorID: '',
+            executorPhoneNumber: '',
+          })
+        )
+      )
     );
   }
+
   public finishDone(id: string): Observable<any> {
     const taskCollection = this.database.collection<FirebaseTask>(
       FirestoreCollectionsNames.TASK
     );
-    return from(
-      taskCollection.doc(id).update({
-        state: TaskState.DONE,
-        rate: {
-          rate: 3,
-          comment: 'TEST COMMENT',
-        },
-      })
+    return this.authService.getUID().pipe(
+      switchMap(uid =>
+        from(
+          taskCollection.doc(id).update({
+            state: TaskState.DONE,
+            rate: {
+              rate: 3,
+              comment: 'TEST COMMENT',
+            },
+          })
+        )
+      )
     );
   }
+
   public finishFail(id: string): Observable<any> {
     const taskCollection = this.database.collection<FirebaseTask>(
       FirestoreCollectionsNames.TASK
     );
-    return from(
-      taskCollection.doc(id).update({
-        state: TaskState.FAILED,
-      })
+    return this.authService.getUID().pipe(
+      switchMap(uid =>
+        from(
+          taskCollection.doc(id).update({
+            state: TaskState.DONE,
+            rate: {
+              rate: 3,
+              comment: 'TEST COMMENT',
+            },
+          })
+        )
+      )
     );
   }
 }

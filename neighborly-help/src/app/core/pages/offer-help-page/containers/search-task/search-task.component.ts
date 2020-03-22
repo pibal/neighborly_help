@@ -14,6 +14,7 @@ export class SearchTaskComponent implements OnInit {
   constructor(private taskApi: TaskApi) {}
 
   ngOnInit() {
+    // TODO use dedicated api function to filter
     this.taskApi
       .getAll()
       .subscribe(
@@ -21,7 +22,7 @@ export class SearchTaskComponent implements OnInit {
           (this.allTasks = value.filter(
             value =>
               value.state === TaskState.REQUESTED ||
-              value.state === TaskState.CANCELED
+              value.state === TaskState.RESIGNED
           ))
       );
   }
